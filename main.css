@@ -124,7 +124,6 @@ main {
 }
 
 .id {
-    background-color: var(--clr-gray);
     padding: .25rem .5rem;
     border-radius: 100vmax;
     font-size: .75rem;
@@ -146,7 +145,6 @@ main {
 
 .tipo {
     padding: .25rem .5rem;
-    border-radius: 100vmax;
 }
 
 .stats {
@@ -156,9 +154,7 @@ main {
 }
 
 .stat {
-    background-color: var(--clr-gray);
     padding: .25rem .5rem;
-    border-radius: 100vmax;
 }
 
 
