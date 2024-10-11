@@ -17,11 +17,6 @@ for (let i = 1; i <= 20; i++) {
 }
 
 function tarjetasPokemon(poke) {
- 
-    let cont = 0;
-   
-
-
     const div = document.createElement("div");
     div.classList.add("pokemon");
     div.innerHTML = `
