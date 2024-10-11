@@ -1,19 +1,25 @@
 const listaPokemon = document.querySelector("#listaPokemon");
 const botonesHeader = document.querySelectorAll(".btn");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
-let i = 1;
+let pokemons = [];
 
-for (i; i <= 20; i++) {
+for (let i = 1; i <= 20; i++) {
     fetch(URL + i)
         .then((response) => response.json())
-        .then(data =>tarjetasPokemon(data))
+        .then(data => {
+            pokemons.push(data);
+            if (pokemons.length === 20) { 
+                pokemons.sort((a, b) => a.id - b.id);
+                pokemons.forEach(pokemon => tarjetasPokemon(pokemon));
+            }
+            
+        });
 }
 
 function tarjetasPokemon(poke) {
  
     let cont = 0;
-    let tipos = poke.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`);//función map para recorrer array tipos
-    tipos = tipos.join('');//cadena de texto con lo de antes
+   
 
 
     const div = document.createElement("div");
@@ -30,10 +36,10 @@ function tarjetasPokemon(poke) {
         </div>
     `;
 
-    div.addEventListener("click", () => { 
-        abrirVentana(poke);});
- 
-    listaPokemon.append(div);
+    div.addEventListener("click", () => {
+        window.location.href = `pagina.html?id=${poke.id}`;
+    });
+   listaPokemon.append(div);
 
     
 }
@@ -63,11 +69,11 @@ botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
 
 // function abrirVentana(poke){
 
-//     const informacion = document.getElementById("pagina");
+// const informacion = document.getElementById("pagina");
 
-//     informacion.innerHTML =  `<p>hola</p>`;
+// informacion.innerHTML =  `<p>hola</p>`;
 
-//     window.location.href = "pagina.html";
+// window.location.href = "pagina.html";
 
 // }
 

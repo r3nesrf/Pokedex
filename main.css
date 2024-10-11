@@ -248,3 +248,10 @@ main {
     background-color:rgb(79, 96, 226) ;
     color: white;
 }
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    margin: 2em auto 2em;
+}
