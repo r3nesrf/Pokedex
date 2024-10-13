@@ -2,18 +2,30 @@ const listaPokemon = document.querySelector("#listaPokemon");
 const botonesHeader = document.querySelectorAll(".btn");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 let pokemons = [];
+let pag = 1;
+const porPag = 20;
+const paginacion = document.querySelector("#paginacion");
 
-for (let i = 1; i <= 20; i++) {
+for (let i = 1; i <= 151; i++) {
     fetch(URL + i)
         .then((response) => response.json())
         .then(data => {
             pokemons.push(data);
-            if (pokemons.length === 20) { 
+            if (pokemons.length === 151) { 
                 pokemons.sort((a, b) => a.id - b.id);
-                pokemons.forEach(pokemon => tarjetasPokemon(pokemon));
+                pokemonPorPagina(pag);
+                botonesPaginacion();
             }
             
         });
+}
+
+function pokemonPorPagina(pagina){
+    listaPokemon.innerHTML = "";
+    let primero = (pagina - 1) * porPag;
+    let ultimo = pagina * porPag;
+    const pokemonTotal = pokemons.slice(primero, ultimo);
+    pokemonTotal.forEach(pokemon => tarjetasPokemon(pokemon));
 }
 
 function tarjetasPokemon(poke) {
@@ -36,6 +48,35 @@ function tarjetasPokemon(poke) {
     });
    listaPokemon.append(div);
 
+    
+}
+
+function botonesPaginacion() {
+    paginacion.innerHTML = "";
+
+    if(pag > 1) {
+        const anterior = document.createElement("button");
+        anterior.textContent = "←";
+        anterior.id = "anterior";
+        anterior.addEventListener("click", () => {
+            pag--;
+            pokemonPorPagina(pag);
+            botonesPaginacion();
+        });
+        paginacion.appendChild(anterior);
+    }
+
+    if(pag < Math.round(pokemons.length / porPag)) {
+        const siguiente = document.createElement("button");
+        siguiente.textContent = "→";
+        siguiente.id = "siguiente";
+        siguiente.addEventListener("click", () => {
+            pag++;
+            pokemonPorPagina(pag);
+            botonesPaginacion();
+        });
+        paginacion.appendChild(siguiente);
+    }
     
 }
 
