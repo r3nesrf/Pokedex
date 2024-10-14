@@ -6,20 +6,21 @@ let pag = 1;
 const porPag = 20;
 const paginacion = document.querySelector("#paginacion");
 
-for (let i = 1; i <= 151; i++) {
-    fetch(URL + i)
-        .then((response) => response.json())
-        .then(data => {
-            pokemons.push(data);
-            if (pokemons.length === 151) { 
-                pokemons.sort((a, b) => a.id - b.id);
-                pokemonPorPagina(pag);
-                botonesPaginacion();
-            }
-            
-        });
-}
+async function cogerPokemon(){
+try{
+    for (let i = 1; i <= 151; i++) {
+        // const axios = require('axios');
+        const respuesta = await axios.get(URL + i);
+        pokemons.push(respuesta.data);
+    }
+    pokemons.sort((a, b) => a.id - b.id);
+    pokemonPorPagina(pag);
+    botonesPaginacion();
 
+    } catch (e) {console.error ("Error", e);}
+
+}
+            
 function pokemonPorPagina(pagina){
     listaPokemon.innerHTML = "";
     let primero = (pagina - 1) * porPag;
@@ -103,6 +104,8 @@ botonesHeader.forEach(boton => boton.addEventListener("click", (event) => {
     }
 }))
 
+
+cogerPokemon();
 // function abrirVentana(poke){
 
 // const informacion = document.getElementById("pagina");
